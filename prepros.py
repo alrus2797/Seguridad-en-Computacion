@@ -13,7 +13,7 @@ def sustituir(txt, dict):
     return txt
 
 def prepros(filename):
-    a = open(filename,'r')
+    a = open(filename,'r',encoding='utf-8')
     caracteres = {
         'j':'i',
         'h':'i',
@@ -30,7 +30,7 @@ def prepros(filename):
         'ó':'o',
         'ú':'u',
     }
-    espacios_tildes = { ' ':'', '.':'', ',':'', ':':'', '“':'', '”':'',
+    espacios_tildes = { ' ':'', '.':'', ',':'', ':':'', '“':'', '”':'', '\n' : '',
     }
     txt= a.read()
     txt = sustituir(txt,caracteres)
