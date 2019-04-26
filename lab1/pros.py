@@ -1,14 +1,16 @@
-arch = open('poema20_pre.txt','r')
-txt =  arch.read()
+def frecuencias(archivo):
+    arch = open(archivo,'r')
+    txt =  arch.read()
 
-frecuencias = {}
-for i in txt:
-    if i in frecuencias:
-        frecuencias[i] += 1
-    else:
-        frecuencias[i] = 1
-mayores = sorted(frecuencias, key=frecuencias.get, reverse=True)[:5]
-#print(mayores)
+
+    frecuencias = {}
+    for i in txt:
+        if i in frecuencias:
+            frecuencias[i] += 1
+        else:
+            frecuencias[i] = 1
+    mayores = sorted(frecuencias, key=frecuencias.get, reverse=True)[:5]
+    return mayores
 
 def encode_unicode(text):
     return "".join("{:02x}".format(ord(c)) for c in text)
@@ -30,6 +32,11 @@ def insertar_aqui(text):
         res += 'X'
     return res
 
+file = "poema20_pre.txt"
+arch = open('poema20_pre.txt','r')
+txt =  arch.read() 
+
 res = insertar_aqui(txt)
+
 print(res)
 print("tamaño: ",len(res))

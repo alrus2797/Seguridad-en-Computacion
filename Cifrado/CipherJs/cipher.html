@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+    <script type="text/javascript" src="js/base64.js"></script>
+    <script type="text/javascript" src="js/alberti.js"></script>
+    <script type="text/javascript" src="js/vigenere.js"></script>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-wrapper  teal lighten-1">
+            <a href="#" class="brand-logo center">CipherJS</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <!-- <li><a href="sass.html">Sass</a></li>
+            <li><a href="badges.html">Components</a></li>
+            <li><a href="collapsible.html">JavaScript</a></li> -->
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        
+        <div class="row">
+            <div class="col m12">
+                <h2 class="center-align">Cifrado de Alberti</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m10">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>Abrir Archivo</span>
+                        <input type='file' accept='text/plain' id='file' onchange="openFile(event)"><br>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>
+            <div class="input-field col m2">
+                <select onchange="updateOptions(event)" id="methods">
+                    <option value="1">Un giro</option>
+                    <option value="2">Multiples giros</option>
+                </select>
+                <label>Métodos</label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col m4">
+                <input value="ABCDEFGILMNOPQRSTVXZ1234" id="outer_disk" type="text" class="validate">
+                <label class="active" for="outer_disk">Disco Externo</label>
+            </div>
+            <div class="input-field col m4">
+                <input value="c&bmdgpfznxyvtoskerlhaiq" id="inner_disk" type="text" class="validate">
+                <label class="active" for="inner_disk">Disco Interno</label>
+            </div>
+            <div class="input-field col m2">
+                <input value="1" id="inner_spin" type="text" class="validate">
+                <label class="active" for="inner_spin" id="label_text">Tamaño del giro</label>
+            </div>
+            <div class="input-field col m2">
+                <button class="btn waves-effect waves-light " type="button" id="cipheredButton" onclick="triggerCipher(event)">Cifrar
+                    <i class="material-icons right">lock</i>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="col s6">
+                        <h5 class="left-align">Texto Cifrado</h5>                
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s10">
+                        <div id="hidden_text" style="display: none;"></div>
+                        <div class="input-field col s12">
+                            <textarea id="output" class="materialize-textarea"></textarea>
+                        </div>
+                    </div>
+                    <div class="col s2">
+                        <div class="left-align">
+                            <button class="btn waves-effect waves-light " type="button" id="cipheredButton" onclick="triggerDownload(event,'output')">Descargar
+                                <i class="material-icons right">file_download</i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+                
+    </div>
+
+    <div class="container">
+    
+        <div class="row">
+            <div class="col m12">
+                <h2 class="center-align">Descifrado Vigenere</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col m12">
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>Abrir Archivo</span>
+                        <input type='file' accept='text/plain' onchange="openFile(event)"><br>
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-field col m5">
+                <input value="ABCDEFGHIJKLMNOPQRSTUVWXYZ" id="alfabeto" type="text" class="validate">
+                <label class="active" for="alfabeto">Alfabeto</label>
+            </div>
+            <div class="input-field col m5">
+                <input value="" id="clave" type="text" class="validate">
+                <label class="active" for="clave">Clave</label>
+            </div>
+            <div class="input-field col m2">
+                <button class="btn waves-effect waves-light" type="button" id="cipheredButton" onclick="triggerDescipher(event)">Descifrar
+                    <i class="material-icons right">lock_open</i>
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="col s6">
+                        <h5 class="left-align">Texto Descifrado</h5>                
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s10">
+                        <div class="input-field ">
+                            <textarea id="desc_output" class="materialize-textarea"></textarea>
+                        </div>
+                    </div>
+                    <div class="col s2">
+                        <div class="left-align">
+                            <button class="btn waves-effect waves-light " type="button" id="descipheredButton" onclick="triggerDownload(event,'desc_output')">Descargar
+                                <i class="material-icons right">file_download</i>
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+                
+    </div>
+
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('select');
+        var instances = M.FormSelect.init(elems, {});
+    });
+    var t;
+    var outerDisk = "ABCDEFGILMNOPQRSTVXZ1234";
+    var innerDisk = "c&bmdgpfznxyvtoskerlhaiq";
+    function download(filename, text) {
+        var element = document.createElement('a');
+        element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+        element.setAttribute('download', filename);
+        
+        element.style.display = 'none';
+        document.body.appendChild(element);
+        
+        element.click();
+        
+        document.body.removeChild(element);
+    }
+
+    function openFile(event){
+        var input = event.target;
+
+        var reader = new FileReader();
+        reader.onload = function(){
+            var text = reader.result;
+            t = JSON.stringify(text);
+            var node = document.getElementById('hidden_text');
+            node.innerText = JSON.stringify(text);
+            console.log("when Read: " +JSON.stringify(text));
+        };
+        reader.readAsText(input.files[0]);
+    }
+
+    var triggerDownload = function(event,id){
+        var text = document.getElementById(id).value;
+        download('alberti.txt',text);
+    }
+
+    var updateOptions = function(event){
+        var elem = event.target;
+        if (elem.value == 1){
+            document.getElementById('label_text').innerText = "Tamaño de giro";
+        }
+        else{
+            document.getElementById('label_text').innerText = "Número de giros";
+        }
+    }
+
+    
+    var triggerCipher = function(event){
+        var cipher_text = document.getElementById('hidden_text').innerText;
+        var innerDisk = document.getElementById('inner_disk').value;
+        var outerDisk = document.getElementById('outer_disk').value;
+        var innerSpin = document.getElementById('inner_spin').value;
+        var method = document.getElementById('methods').value;
+        console.log("PreValues: "+cipher_text);
+
+        if (method == 2)
+        {
+            giros = {}
+            for (var i=0; i< innerSpin;i++){
+                var b = prompt("Ingrese la posición del giro y la cantidad: (Le quedan " + (innerSpin - i) +" giros)");
+                b = b.trim()
+                b = b.split(" ");
+                giros[parseInt(b[0])] = parseInt(b[1])
+            }
+            console.log(giros);
+            var ciphered = multiple_alberti(cipher_text,innerDisk,outerDisk, giros);
+            
+        }
+        else{
+            var ciphered = alberti(cipher_text,innerDisk,outerDisk, innerSpin);
+        }
+
+        var node = document.getElementById('output');
+        node.innerText = ciphered;
+        t = ciphered;
+        M.textareaAutoResize(node)
+    }
+
+    var triggerDescipher = function(event){
+        var descipher_text = document.getElementById('hidden_text').innerText;
+        var key = document.getElementById('clave').value;
+        var alphabet = document.getElementById('alfabeto').value;
+        console.log('Prevalues: ',descipher_text, key, alphabet);
+
+        var desciphered = desc_vigenere(descipher_text, key, alphabet);
+        console.log("Value:",desciphered);
+        var node = document.getElementById('desc_output');
+        node.innerText = desciphered;
+        M.textareaAutoResize(node);
+
+    }
+
+
+</script>
+</html>
