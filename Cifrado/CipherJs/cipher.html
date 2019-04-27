@@ -33,7 +33,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col m10">
+            <div class="col m8">
                 <div class="file-field input-field">
                     <div class="btn">
                         <span>Abrir Archivo</span>
@@ -44,10 +44,12 @@
                     </div>
                 </div>
             </div>
-            <div class="input-field col m2">
+            <div class="input-field col m4">
                 <select onchange="updateOptions(event)" id="methods">
                     <option value="1">Un giro</option>
-                    <option value="2">Multiples giros</option>
+                    <option value="2">Multiples giros - Con respecto a posición inicial</option>
+                    <option value="3">Multiples giros - Con respecto a posición actual</option>
+                    <option value="4">Giro periódico</option>
                 </select>
                 <label>Métodos</label>
             </div>
@@ -172,8 +174,8 @@
         var instances = M.FormSelect.init(elems, {});
     });
     var t;
-    var outerDisk = "ABCDEFGILMNOPQRSTVXZ1234";
-    var innerDisk = "c&bmdgpfznxyvtoskerlhaiq";
+    //var outerDisk = "ABCDEFGILMNOPQRSTVXZ1234";
+    //var innerDisk = "c&bmdgpfznxyvtoskerlhaiq";
     function download(filename, text) {
         var element = document.createElement('a');
         element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -211,8 +213,12 @@
         if (elem.value == 1){
             document.getElementById('label_text').innerText = "Tamaño de giro";
         }
-        else{
+        else if (elem.value == 2 || elem.value == 3){
             document.getElementById('label_text').innerText = "Número de giros";
+        }
+        else if (elem.value == 4){
+            document.getElementById('label_text').innerText = "Tamaño de giro Inicial";
+            
         }
     }
 
@@ -225,7 +231,7 @@
         var method = document.getElementById('methods').value;
         console.log("PreValues: "+cipher_text);
 
-        if (method == 2)
+        if ( method == 2 || method == 3 )
         {
             giros = {}
             for (var i=0; i< innerSpin;i++){
@@ -238,8 +244,14 @@
             var ciphered = multiple_alberti(cipher_text,innerDisk,outerDisk, giros);
             
         }
-        else{
+        else if (method == 1){
             var ciphered = alberti(cipher_text,innerDisk,outerDisk, innerSpin);
+        }
+
+        else if (method == 4){
+            var periodo = prompt("Ingrese tamaño de periodo");
+            var spin = prompt("Ingrese tamaño del giro periodico");
+
         }
 
         var node = document.getElementById('output');
