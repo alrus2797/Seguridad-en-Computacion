@@ -241,7 +241,13 @@
                 giros[parseInt(b[0])] = parseInt(b[1])
             }
             console.log(giros);
-            var ciphered = multiple_alberti(cipher_text,innerDisk,outerDisk, giros);
+            if (method == 2){
+                //ALBERTI GIROS DESDE POSICION INICIAL
+                var ciphered = multiple_alberti(cipher_text,innerDisk,outerDisk, giros);
+            }
+            else{
+                //ALBERTI GIROS DESDE POSICION ACTUAL
+            }
             
         }
         else if (method == 1){
@@ -249,6 +255,7 @@
         }
 
         else if (method == 4){
+            //ALBERTI PERIODICO
             var periodo = prompt("Ingrese tamaño de periodo");
             var spin = prompt("Ingrese tamaño del giro periodico");
 

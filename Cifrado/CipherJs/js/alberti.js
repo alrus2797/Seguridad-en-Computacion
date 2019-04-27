@@ -120,3 +120,7 @@ function multiple_alberti(text, innerDisk, outerDisk, spins){
     }
     return encripted_text;
 }
+
+function periodic_alberti(text, innerDisk, outerDisk, initial_spin, period, period_spin){
+    
+}
