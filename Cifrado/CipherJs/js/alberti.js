@@ -121,6 +121,34 @@ function multiple_alberti(text, innerDisk, outerDisk, spins){
     return encripted_text;
 }
 
-function periodic_alberti(text, innerDisk, outerDisk, initial_spin, period, period_spin){
+function periodic_alberti(text, innerDisk, outer_disk, initial_spin, period, period_spin){
+    text = preprocessing(text);
+    if (innerDisk.length != outer_disk.length){
+        alert("Disk has different length");
+        return;
+    }
     
+    encripted_text = "";
+
+    var curr_spin = parseInt(initial_spin);
+    period = parseInt(period)
+    period_spin = parseInt(period_spin)
+
+    
+    for (var i = 0 ; i< text.length; i++){
+        var outer_index = outer_disk.indexOf(text[i]);
+        if (outer_index < 0){
+            console.log("nf", text[i]);
+            //alert("Found a character that's not in the disk: " + i+" "+ outer_index +" "+text);
+            return;
+        }
+        
+        if ( i != 0 && i % period == 0){
+            curr_spin += period_spin;
+        }
+        console.log(text[i], modulo(outer_index - curr_spin, innerDisk.length), innerDisk.get(modulo(outer_index - curr_spin, innerDisk.length)));
+
+        encripted_text += innerDisk.get(modulo(outer_index - curr_spin, innerDisk.length));
+    }
+    return encripted_text;
 }
